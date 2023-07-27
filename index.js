@@ -16,6 +16,9 @@ mongoose
   });
 
 // mongoose insert data to database
+app.get("/",(req,res)=>{
+  res.send("its home page")
+})
 const Image = require("./model");
 app.post("/upload", async (req, res) => {
   const {
