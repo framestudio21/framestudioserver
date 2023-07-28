@@ -88,6 +88,8 @@ app.post("/feedback", async (req, res) => {
   });
   await feedback
     .save()
+    .then(() => res.status(200).json({ success: "success" }))
+    .catch((error) => console.log(error));
 
   const nodemailer = require("nodemailer");
   const sub =
@@ -97,7 +99,7 @@ app.post("/feedback", async (req, res) => {
     host: "smtp.gmail.com",
     port: 465,
     auth: {
-      user: process.env.USER,
+      user: "info.framestudio21@gmail.com",
       pass: process.env.PASS,
     },
   });
@@ -112,8 +114,7 @@ app.post("/feedback", async (req, res) => {
       "</strong><br>Your Feedback: <strong>" +
       text +
       "</div>",
-  }).then(() => res.status(200).json({ success: "success" }))
-    .catch((error) => console.log(error));
+  })
 });
 
 
@@ -144,7 +145,7 @@ designfor,
       host: "smtp.gmail.com",
       port: 465,
       auth: {
-        user: process.env.USER,
+        user: "info.framestudio21@gmail.com",
         pass: process.env.PASS,
       },
     });
