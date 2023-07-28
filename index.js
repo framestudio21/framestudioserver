@@ -88,8 +88,6 @@ app.post("/feedback", async (req, res) => {
   });
   await feedback
     .save()
-    .then(() => res.status(200).json({ success: "success" }))
-    .catch((error) => console.log(error));
 
   const nodemailer = require("nodemailer");
   const sub =
@@ -104,7 +102,7 @@ app.post("/feedback", async (req, res) => {
     },
   });
 
-  transporter.sendMail({
+  await transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
     to: email.toLowerCase() + ", info.framestudio21@gmail.com",
     subject: sub,
@@ -114,7 +112,8 @@ app.post("/feedback", async (req, res) => {
       "</strong><br>Your Feedback: <strong>" +
       text +
       "</div>",
-  });
+  }).then(() => res.status(200).json({ success: "success" }))
+    .catch((error) => console.log(error));
 });
 
 
