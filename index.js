@@ -16,9 +16,6 @@ mongoose
   });
 
 // mongoose insert data to database
-app.get("/",(req,res)=>{
-  res.send("its home page")
-})
 const Image = require("./model");
 app.post("/upload", async (req, res) => {
   const {
@@ -99,12 +96,12 @@ app.post("/feedback", async (req, res) => {
     host: "smtp.gmail.com",
     port: 465,
     auth: {
-      user: "info.framestudio21@gmail.com",
+      user: process.env.USER,
       pass: process.env.PASS,
     },
   });
 
-  await transporter.sendMail({
+  transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
     to: email.toLowerCase() + ", info.framestudio21@gmail.com",
     subject: sub,
@@ -114,7 +111,7 @@ app.post("/feedback", async (req, res) => {
       "</strong><br>Your Feedback: <strong>" +
       text +
       "</div>",
-  })
+  });
 });
 
 
@@ -145,7 +142,7 @@ designfor,
       host: "smtp.gmail.com",
       port: 465,
       auth: {
-        user: "info.framestudio21@gmail.com",
+        user: process.env.USER,
         pass: process.env.PASS,
       },
     });
