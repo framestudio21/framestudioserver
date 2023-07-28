@@ -217,6 +217,14 @@ app.get("/digitalart", (req, res) => {
     });
 });
 
+app.get("/aiart", (req, res) => {
+  Image.find({ designtype: "aiart" })
+    .sort({ createdAt: -1 })
+    .then((data) => {
+      res.json(data);
+    });
+});
+
 app.get("/photography", (req, res) => {
   Image.find({ designtype: "photography" })
     .sort({ createdAt: -1 })
