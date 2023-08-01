@@ -117,7 +117,6 @@ let transporter = await nodemailer.createTransport({
       "</div>"
   }).then(()=>{
     console.log('mail sent: '+ text)
-    transporter.close()
   }).catch((err)=>console.log(err))
 })
 
@@ -172,8 +171,7 @@ designfor +
       description +
       "</div>"
   }).then(()=>{
-    console.log('mail sent: '+ text)
-    transporter.close()
+    console.log('mail sent: '+ designtype)
   }).catch((err)=>console.log(err))
 });
 
