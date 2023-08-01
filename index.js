@@ -77,7 +77,7 @@ app.post("/admin", async (req, res) => {
 let nodemailer = require("nodemailer");
 
 const Feedback = require("./feedbackmodule");
-app.post("/feedback", (req, res) => {
+app.post("/feedback", async (req, res) => {
   const { name, email, text } =
     req.body;
   const feedback = new Feedback({
@@ -124,7 +124,7 @@ let transporter = await nodemailer.createTransport({
 
 // contact module page
 const Contact = require("./contactmodule");
-app.post("/contact", (req, res) => {
+app.post("/contact", async (req, res) => {
   const { name, email, imagereference, subject, designtype, designfor, description } =
     req.body;
   const contact = new Contact({
