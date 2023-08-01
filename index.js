@@ -92,7 +92,7 @@ app.post("/feedback", async (req, res) => {
   const sub =
     "Thank You For Your Support."
 
-  const transporter = nodemailer.createTransport({
+  const transporter = await nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
@@ -102,7 +102,7 @@ app.post("/feedback", async (req, res) => {
     },
   })
 
-  transporter.sendMail({
+  await transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
     to: email.toLowerCase() + ", info.framestudio21@gmail.com",
     subject: sub,
@@ -112,7 +112,7 @@ app.post("/feedback", async (req, res) => {
       "</strong><br>Your Feedback: <strong>" +
       text +
       "</div>",
-  }).then(()=>console.log('mail sent.'))
+  })
 });
 
 
@@ -139,7 +139,7 @@ designfor,
   const sub =
     "Thank You For Your Order Of " + designfor
 
-    const transporter = nodemailer.createTransport({
+    const transporter = await nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465,
       secure: true,
@@ -149,7 +149,7 @@ designfor,
       },
     })
 
-  transporter.sendMail({
+  await transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
     to: email.toLowerCase() + ", info.framestudio21@gmail.com",
     subject: sub.toUpperCase(),
@@ -161,7 +161,7 @@ designfor +
 "</strong><br>Description: <strong>" +
       description +
       "</div>",
-  }).then(()=>console.log('mail sent.'))
+  })
 });
 
 // advertisement image upload section
