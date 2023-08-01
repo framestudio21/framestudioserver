@@ -107,7 +107,7 @@ let transporter = nodemailer.createTransport({
   })
   transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
-    to: email + "info.framestudio21@gmail.com",
+    to: email + ", info.framestudio21@gmail.com",
     subject: "Thank You For Your Support.",
     html:
       "<div>Name: <strong>" +
