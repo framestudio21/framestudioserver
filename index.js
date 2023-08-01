@@ -83,7 +83,7 @@ app.post("/feedback", async (req, res) => {
     email,
     text,
   });
-  await feedback
+  feedback
     .save()
     .then(() => res.status(200).json({ success: "success" }))
     .catch((error) => console.log(error));
@@ -102,7 +102,7 @@ app.post("/feedback", async (req, res) => {
     },
   })
 
-  await transporter.sendMail({
+  const maildetails = {
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
     to: email.toLowerCase() + ", info.framestudio21@gmail.com",
     subject: sub,
@@ -111,9 +111,13 @@ app.post("/feedback", async (req, res) => {
       name +
       "</strong><br>Your Feedback: <strong>" +
       text +
-      "</div>",
+      "</div>"
+  }
+
+  await transporter.sendMail(maildetails,function(err){
+    if(err) return console.log(err)
+    return console.log('mail sent')
   })
-  console.log('maail sent')
 });
 
 
@@ -163,7 +167,7 @@ designfor +
       description +
       "</div>",
   })
-  console.log('maail sent')
+  console.log('mail sent')
 });
 
 // advertisement image upload section
