@@ -113,6 +113,7 @@ app.post("/feedback", async (req, res) => {
       text +
       "</div>",
   })
+  console.log('maail sent')
 });
 
 
@@ -162,6 +163,7 @@ designfor +
       description +
       "</div>",
   })
+  console.log('maail sent')
 });
 
 // advertisement image upload section
