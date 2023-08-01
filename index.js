@@ -87,7 +87,7 @@ const transporter = nodemailer.createTransport({
 async function sendmail(){
   const info = await transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
-    to: email.toLowerCase() + ", info.framestudio21@gmail.com",
+    to: "info.framestudio21@gmail.com",
     subject: "Thank You For Your Support.",
     html:
       "<div>Name: <strong>" +
