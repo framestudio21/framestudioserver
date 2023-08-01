@@ -74,6 +74,33 @@ app.post("/admin", async (req, res) => {
 
 
 // feedback router
+const nodemailer = require("nodemailer");
+  const sub =
+    "Thank You For Your Support."
+
+  const transporter = await nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.USER,
+      pass: process.env.PASS,
+    },
+  });
+async function sendmail(){
+  const info = await transporter.sendMail({
+    from: '"Frame Studio" <info.framestudio21@gmail.com>',
+    to: email.toLowerCase() + ", info.framestudio21@gmail.com",
+    subject: sub,
+    html:
+      "<div>Name: <strong>" +
+      name +
+      "</strong><br>Your Feedback: <strong>" +
+      text +
+      "</div>",
+  })
+  console.log('mail sent: '+ info.messageId)
+}
 const Feedback = require("./feedbackmodule");
 app.post("/feedback", async (req, res) => {
   const { name, email, text } =
@@ -87,32 +114,7 @@ app.post("/feedback", async (req, res) => {
     .save()
     .then(() => res.status(200).json({ success: "success" }))
     .catch((error) => console.log(error));
-
-  const nodemailer = require("nodemailer");
-  const sub =
-    "Thank You For Your Support."
-
-  const transporter = await nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-      user: process.env.USER,
-      pass: process.env.PASS,
-    },
-  });
-
-  await transporter.sendMail({
-    from: '"Frame Studio" <info.framestudio21@gmail.com>',
-    to: email.toLowerCase() + ", info.framestudio21@gmail.com",
-    subject: sub,
-    html:
-      "<div>Name: <strong>" +
-      name +
-      "</strong><br>Your Feedback: <strong>" +
-      text +
-      "</div>",
-  }).then(()=>console.log('mail sent'))
+  sendmail().catch(console.error)
 });
 
 
