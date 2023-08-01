@@ -95,11 +95,12 @@ app.post("/feedback", async (req, res) => {
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
+    secure: true,
     auth: {
       user: process.env.USER,
       pass: process.env.PASS,
     },
-  });
+  })
 
   transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
@@ -111,7 +112,7 @@ app.post("/feedback", async (req, res) => {
       "</strong><br>Your Feedback: <strong>" +
       text +
       "</div>",
-  });
+  }).then(()=>console.log('mail sent.'))
 });
 
 
@@ -141,11 +142,12 @@ designfor,
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465,
+      secure: true,
       auth: {
         user: process.env.USER,
         pass: process.env.PASS,
       },
-    });
+    })
 
   transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
@@ -159,7 +161,7 @@ designfor +
 "</strong><br>Description: <strong>" +
       description +
       "</div>",
-  });
+  }).then(()=>console.log('mail sent.'))
 });
 
 // advertisement image upload section
