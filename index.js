@@ -112,10 +112,7 @@ app.post("/feedback", async (req, res) => {
       "</strong><br>Your Feedback: <strong>" +
       text +
       "</div>",
-  },function(err){
-    if(err) return console.log(err)
-    return console.log('mail sent')
-  })
+  }).then(()=>console.log('mail sent'))
 });
 
 
