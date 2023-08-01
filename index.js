@@ -76,6 +76,7 @@ app.post("/admin", async (req, res) => {
 // feedback router
 let nodemailer = require("nodemailer");
 let transporter = nodemailer.createTransport({
+    pool: true,
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
@@ -92,7 +93,7 @@ let transporter = nodemailer.createTransport({
     }
   })
 const Feedback = require("./feedbackmodule");
-app.post("/feedback", async (req, res) => {
+app.post("/feedback", (req, res) => {
   const { name, email, text } =
     req.body;
   const feedback = new Feedback({
@@ -115,13 +116,13 @@ app.post("/feedback", async (req, res) => {
       "</strong><br>Your Feedback: <strong>" +
       text +
       "</div>"
-  }).then(()=>console.log('mail sent'))
+  }).then(()=>console.log('mail sent: '+ text)).catch((err)=>console.log(err))
 })
 
 
 // contact module page
 const Contact = require("./contactmodule");
-app.post("/contact", async (req, res) => {
+app.post("/contact", (req, res) => {
   const { name, email, imagereference, subject, designtype, designfor, description } =
     req.body;
   const contact = new Contact({
@@ -133,7 +134,7 @@ app.post("/contact", async (req, res) => {
 designfor,
     description,
   });
-  await contact
+  contact
     .save()
     .then(() => res.status(200).json({ success: "success" }))
     .catch((error) => console.log(error));
@@ -153,7 +154,7 @@ designfor +
 "</strong><br>Description: <strong>" +
       description +
       "</div>"
-  }).then(()=>console.log('mail sent'))
+  }).then(()=>console.log('mail sent- '+ designtype)).catch((err)=>console.log(err))
 });
 
 // advertisement image upload section
