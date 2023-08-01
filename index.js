@@ -74,19 +74,6 @@ app.post("/admin", async (req, res) => {
 
 
 // feedback router
-const Feedback = require("./feedbackmodule");
-app.post("/feedback", async (req, res) => {
-  const { name, email, text } =
-    req.body;
-  const feedback = new Feedback({
-    name,
-    email,
-    text,
-  });
-  feedback
-    .save()
-    .then(() => res.status(200).json({ success: "success" }))
-    .catch((error) => console.log(error));
 let nodemailer = require("nodemailer");
 let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -104,6 +91,20 @@ let transporter = nodemailer.createTransport({
       console.log('msg: mail server is ready.')
     }
   })
+const Feedback = require("./feedbackmodule");
+app.post("/feedback", async (req, res) => {
+  const { name, email, text } =
+    req.body;
+  const feedback = new Feedback({
+    name,
+    email,
+    text,
+  });
+  feedback
+    .save()
+    .then(() => res.status(200).json({ success: "success" }))
+    .catch((error) => console.log(error));
+
   transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
     to: email + ", info.framestudio21@gmail.com",
@@ -113,9 +114,8 @@ let transporter = nodemailer.createTransport({
       name +
       "</strong><br>Your Feedback: <strong>" +
       text +
-      "</div>",
-  })
-  transporter.close();
+      "</div>"
+  }).then(()=>console.log('mail sent'))
 })
 
 
@@ -138,19 +138,9 @@ designfor,
     .then(() => res.status(200).json({ success: "success" }))
     .catch((error) => console.log(error));
 
-  const nodemailer = require("nodemailer");
   const sub =
     "Thank You For Your Order Of " + designfor
-
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      auth: {
-        user: process.env.USER,
-        pass: process.env.PASS,
-      },
-    });
-
+  
   transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
     to: email.toLowerCase() + ", info.framestudio21@gmail.com",
@@ -162,8 +152,8 @@ designfor,
 designfor + 
 "</strong><br>Description: <strong>" +
       description +
-      "</div>",
-  });
+      "</div>"
+  }).then(()=>console.log('mail sent'))
 });
 
 // advertisement image upload section
