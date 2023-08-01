@@ -76,7 +76,6 @@ app.post("/admin", async (req, res) => {
 // feedback router
 let nodemailer = require("nodemailer");
 let transporter = nodemailer.createTransport({
-    pool: true,
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
