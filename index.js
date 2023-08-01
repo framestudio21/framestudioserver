@@ -98,13 +98,13 @@ let transporter = await nodemailer.createTransport({
       pass: process.env.PASS,
     },
   });
- await transporter.verify(function(error,success){
+ /*await transporter.verify(function(error,success){
     if(error){
       console.log(error)
     } else{
       console.log('msg: mail server is ready.')
     }
-  })
+  })*/
   transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
     to: email + ", info.framestudio21@gmail.com",
@@ -115,9 +115,9 @@ let transporter = await nodemailer.createTransport({
       "</strong><br>Your Feedback: <strong>" +
       text +
       "</div>"
-  }).then(()=>{
+  })/*.then(()=>{
     console.log('mail sent: '+ text)
-  }).catch((err)=>console.log(err))
+  })*/.catch((err)=>console.log(err))
 })
 
 
@@ -151,13 +151,13 @@ designfor,
       pass: process.env.PASS,
     },
   });
- await transporter.verify(function(error,success){
+ /*await transporter.verify(function(error,success){
     if(error){
       console.log(error)
     } else{
       console.log('msg: mail server is ready.')
     }
-  })
+  })*/
 await transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
     to: email.toLowerCase() + ", info.framestudio21@gmail.com",
@@ -170,9 +170,9 @@ designfor +
 "</strong><br>Description: <strong>" +
       description +
       "</div>"
-  }).then(()=>{
+  })/*.then(()=>{
     console.log('mail sent: '+ designtype)
-  }).catch((err)=>console.log(err))
+  })*/.catch((err)=>console.log(err))
 });
 
 // advertisement image upload section
