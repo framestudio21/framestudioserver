@@ -87,8 +87,8 @@ app.post("/feedback", async (req, res) => {
     .save()
     .then(() => res.status(200).json({ success: "success" }))
     .catch((error) => console.log(error));
-const nodemailer = require("nodemailer");
-const transporter = nodemailer.createTransport({
+let nodemailer = require("nodemailer");
+let transporter = await nodemailer.createTransport({
     pool: true,
     host: "smtp.gmail.com",
     port: 465,
@@ -98,14 +98,13 @@ const transporter = nodemailer.createTransport({
       pass: process.env.PASS,
     },
   });
-  transporter.verify(function(error,success){
+ await transporter.verify(function(error,success){
     if(error){
       console.log(error)
     } else{
       console.log('mail server is ready.')
     }
   })
-async function sendmail(){
   const info = await transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
     to: "info.framestudio21@gmail.com",
@@ -117,10 +116,8 @@ async function sendmail(){
       text +
       "</div>",
   })
-  console.log('mail sent: '+ info.messageId)
-}
-  sendmail().catch(console.error)
-});
+  console.log('mail sent: '+ await info.messageId)
+})
 
 
 // contact module page
