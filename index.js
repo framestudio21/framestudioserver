@@ -93,9 +93,10 @@ app.post("/feedback", async (req, res) => {
     "Thank You For Your Support."
 
   const transporter = await nodemailer.createTransport({
-    host: "smtp.gmail.com",
+    /*host: "smtp.gmail.com",
     port: 465,
-    secure: true,
+    secure: true,*/
+    service: 'gmail',
     auth: {
       user: process.env.USER,
       pass: process.env.PASS,
