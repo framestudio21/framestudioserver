@@ -83,7 +83,7 @@ app.post("/feedback", async (req, res) => {
     email,
     text,
   });
-  feedback
+  await feedback
     .save()
     .then(() => res.status(200).json({ success: "success" }))
     .catch((error) => console.log(error));
@@ -92,18 +92,16 @@ app.post("/feedback", async (req, res) => {
   const sub =
     "Thank You For Your Support."
 
-  const transporter = await nodemailer.createTransport({
-    /*host: "smtp.gmail.com",
+  const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
     port: 465,
-    secure: true,*/
-    service: 'gmail',
     auth: {
       user: process.env.USER,
       pass: process.env.PASS,
     },
-  })
+  });
 
-  const maildetails = {
+  transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
     to: email.toLowerCase() + ", info.framestudio21@gmail.com",
     subject: sub,
@@ -112,13 +110,8 @@ app.post("/feedback", async (req, res) => {
       name +
       "</strong><br>Your Feedback: <strong>" +
       text +
-      "</div>"
-  }
-
-  await transporter.sendMail(maildetails,function(err){
-    if(err) return console.log(err)
-    return console.log('mail sent')
-  })
+      "</div>",
+  });
 });
 
 
@@ -145,17 +138,16 @@ designfor,
   const sub =
     "Thank You For Your Order Of " + designfor
 
-    const transporter = await nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465,
-      secure: true,
       auth: {
         user: process.env.USER,
         pass: process.env.PASS,
       },
-    })
+    });
 
-  await transporter.sendMail({
+  transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
     to: email.toLowerCase() + ", info.framestudio21@gmail.com",
     subject: sub.toUpperCase(),
@@ -167,8 +159,7 @@ designfor +
 "</strong><br>Description: <strong>" +
       description +
       "</div>",
-  })
-  console.log('mail sent')
+  });
 });
 
 // advertisement image upload section
