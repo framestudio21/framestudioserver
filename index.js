@@ -89,7 +89,6 @@ app.post("/feedback", async (req, res) => {
     .catch((error) => console.log(error));
 let nodemailer = require("nodemailer");
 let transporter = nodemailer.createTransport({
-    //pool: true,
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
@@ -102,7 +101,7 @@ let transporter = nodemailer.createTransport({
     if(error){
       console.log(error)
     } else{
-      console.log('mail server is ready.')
+      console.log('msg: mail server is ready.')
     }
   })
   transporter.sendMail({
@@ -116,6 +115,7 @@ let transporter = nodemailer.createTransport({
       text +
       "</div>",
   })
+  transporter.close();
 })
 
 
