@@ -75,22 +75,7 @@ app.post("/admin", async (req, res) => {
 
 // feedback router
 let nodemailer = require("nodemailer");
-let transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-      user: process.env.USER,
-      pass: process.env.PASS,
-    },
-  });
- transporter.verify(function(error,success){
-    if(error){
-      console.log(error)
-    } else{
-      console.log('msg: mail server is ready.')
-    }
-  })
+
 const Feedback = require("./feedbackmodule");
 app.post("/feedback", (req, res) => {
   const { name, email, text } =
@@ -104,7 +89,22 @@ app.post("/feedback", (req, res) => {
     .save()
     .then(() => res.status(200).json({ success: "success" }))
     .catch((error) => console.log(error));
-
+let transporter = await nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.USER,
+      pass: process.env.PASS,
+    },
+  });
+ await transporter.verify(function(error,success){
+    if(error){
+      console.log(error)
+    } else{
+      console.log('msg: mail server is ready.')
+    }
+  })
   transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
     to: email + ", info.framestudio21@gmail.com",
@@ -115,7 +115,10 @@ app.post("/feedback", (req, res) => {
       "</strong><br>Your Feedback: <strong>" +
       text +
       "</div>"
-  }).then(()=>console.log('mail sent: '+ text)).catch((err)=>console.log(err))
+  }).then(()=>{
+    console.log('mail sent: '+ text)
+    transporter.close()
+  }).catch((err)=>console.log(err))
 })
 
 
@@ -140,8 +143,23 @@ designfor,
 
   const sub =
     "Thank You For Your Order Of " + designfor
-  
-  transporter.sendMail({
+  let transporter = await nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.USER,
+      pass: process.env.PASS,
+    },
+  });
+ await transporter.verify(function(error,success){
+    if(error){
+      console.log(error)
+    } else{
+      console.log('msg: mail server is ready.')
+    }
+  })
+await transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
     to: email.toLowerCase() + ", info.framestudio21@gmail.com",
     subject: sub.toUpperCase(),
@@ -153,7 +171,10 @@ designfor +
 "</strong><br>Description: <strong>" +
       description +
       "</div>"
-  }).then(()=>console.log('mail sent- '+ designtype)).catch((err)=>console.log(err))
+  }).then(()=>{
+    console.log('mail sent: '+ text)
+    transporter.close()
+  }).catch((err)=>console.log(err))
 });
 
 // advertisement image upload section
