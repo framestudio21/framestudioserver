@@ -89,7 +89,7 @@ app.post("/feedback", async (req, res) => {
     .catch((error) => console.log(error));
 let nodemailer = require("nodemailer");
 let transporter = nodemailer.createTransport({
-    pool: true,
+    //pool: true,
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
@@ -98,7 +98,7 @@ let transporter = nodemailer.createTransport({
       pass: process.env.PASS,
     },
   });
- await transporter.verify(function(error,success){
+ transporter.verify(function(error,success){
     if(error){
       console.log(error)
     } else{
@@ -107,7 +107,7 @@ let transporter = nodemailer.createTransport({
   })
   transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
-    to: "info.framestudio21@gmail.com",
+    to: email + "info.framestudio21@gmail.com",
     subject: "Thank You For Your Support.",
     html:
       "<div>Name: <strong>" +
