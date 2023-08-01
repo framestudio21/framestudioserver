@@ -75,10 +75,7 @@ app.post("/admin", async (req, res) => {
 
 // feedback router
 const nodemailer = require("nodemailer");
-  const sub =
-    "Thank You For Your Support."
-
-  const transporter = await nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
@@ -91,7 +88,7 @@ async function sendmail(){
   const info = await transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
     to: email.toLowerCase() + ", info.framestudio21@gmail.com",
-    subject: sub,
+    subject: "Thank You For Your Support.",
     html:
       "<div>Name: <strong>" +
       name +
