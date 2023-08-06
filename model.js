@@ -16,6 +16,16 @@ const model = new mongoose.Schema({
     imagelink4: String, 
     imagelink5: String,
     author: String,
+    tag1: String,
+    tag2: String,
+    tag3: String,
+    tag4: String,
+    tag5: String,
+    createdate: String,
+    facebooklink: String,
+    twitterlink: String,
+    instagramlink: String,
+      githublink: String,
 }, {timestamps:true})
 
 module.exports = mongoose.model("Image",model)
