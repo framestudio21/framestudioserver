@@ -34,6 +34,16 @@ app.post("/upload", async (req, res) => {
     imagelink4,
     imagelink5,
     author,
+        tag1,
+        tag2,
+        tag3,
+        tag4,
+        tag5,
+        createdate,
+        facebooklink,
+        twitterlink,
+        instagramlink,
+        githublink,
   } = req.body;
   const img = new Image({
     designtype,
@@ -51,6 +61,16 @@ app.post("/upload", async (req, res) => {
     imagelink4,
     imagelink5,
     author,
+    tag1,
+    tag2,
+    tag3,
+    tag4,
+    tag5,
+    createdate,
+    facebooklink,
+    twitterlink,
+    instagramlink,
+    githublink,
   });
   await img
     .save()
@@ -74,8 +94,6 @@ app.post("/admin", async (req, res) => {
 
 
 // feedback router
-let nodemailer = require("nodemailer");
-
 const Feedback = require("./feedbackmodule");
 app.post("/feedback", async (req, res) => {
   const { name, email, text } =
@@ -85,40 +103,36 @@ app.post("/feedback", async (req, res) => {
     email,
     text,
   });
-  feedback
+  await feedback
     .save()
     .then(() => res.status(200).json({ success: "success" }))
     .catch((error) => console.log(error));
-let transporter = await nodemailer.createTransport({
+
+  const nodemailer = require("nodemailer");
+  const sub =
+    "Thank You For Your Support."
+
+  const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
-    secure: true,
     auth: {
       user: process.env.USER,
       pass: process.env.PASS,
     },
   });
- /*await transporter.verify(function(error,success){
-    if(error){
-      console.log(error)
-    } else{
-      console.log('msg: mail server is ready.')
-    }
-  })*/
+
   transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
-    to: email + ", info.framestudio21@gmail.com",
-    subject: "Thank You For Your Support.",
+    to: email.toLowerCase() + ", info.framestudio21@gmail.com",
+    subject: sub,
     html:
       "<div>Name: <strong>" +
       name +
       "</strong><br>Your Feedback: <strong>" +
       text +
-      "</div>"
-  })/*.then(()=>{
-    console.log('mail sent: '+ text)
-  })*/.catch((err)=>console.log(err))
-})
+      "</div>",
+  });
+});
 
 
 // contact module page
@@ -135,30 +149,25 @@ app.post("/contact", async (req, res) => {
 designfor,
     description,
   });
-  contact
+  await contact
     .save()
     .then(() => res.status(200).json({ success: "success" }))
     .catch((error) => console.log(error));
 
+  const nodemailer = require("nodemailer");
   const sub =
     "Thank You For Your Order Of " + designfor
-  let transporter = await nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-      user: process.env.USER,
-      pass: process.env.PASS,
-    },
-  });
- /*await transporter.verify(function(error,success){
-    if(error){
-      console.log(error)
-    } else{
-      console.log('msg: mail server is ready.')
-    }
-  })*/
-await transporter.sendMail({
+
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      auth: {
+        user: process.env.USER,
+        pass: process.env.PASS,
+      },
+    });
+
+  transporter.sendMail({
     from: '"Frame Studio" <info.framestudio21@gmail.com>',
     to: email.toLowerCase() + ", info.framestudio21@gmail.com",
     subject: sub.toUpperCase(),
@@ -169,10 +178,8 @@ await transporter.sendMail({
 designfor + 
 "</strong><br>Description: <strong>" +
       description +
-      "</div>"
-  })/*.then(()=>{
-    console.log('mail sent: '+ designtype)
-  })*/.catch((err)=>console.log(err))
+      "</div>",
+  });
 });
 
 // advertisement image upload section
